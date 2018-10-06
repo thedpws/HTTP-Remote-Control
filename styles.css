@@ -1,0 +1,13 @@
+h3{
+    text-align: center;
+}
+.jumbotron{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.row{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
