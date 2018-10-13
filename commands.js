@@ -23,8 +23,8 @@ exports.decrescendo = (callback) => {
   var vol = 10;
   let command = "./scripts/decrescendo.sh";
   exe(command);
-  maxvolume();
-  next(callback);
+  exports.maxvolume();
+  exports.next(callback);
 }
 
 //previous track
