@@ -22,16 +22,6 @@ function sendPutTo(pathname){
   }
   xmlHttp.open("PUT", pathname, true);
   xmlHttp.send();
-
-  /*
-  if (pathname === '/next' || pathname === '/prev'){
-      let prevname = getCurrentTrack();
-      setCurrentTrack("Waiting...");
-      while (getCurrentTrack() === prevname || getCurrentTrack() === "Waiting..."){
-          updateCurrentTrack();
-      }
-  }
-  */
 }
 
 function setCurrentTrack(name){

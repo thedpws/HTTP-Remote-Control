@@ -86,63 +86,6 @@ const requestHandler = (req, res) => {
             break;
     }
   }
-  /*
-  switch (req.method){
-    //if GET
-    case 'GET':
-      switch (parsedUrl.pathname){
-        //SENT TO HOME INDEX
-        case '/':
-          res.writeHead(200, {'Content-Type': 'html'});
-          res.write(htmlData);
-          res.end();
-          break;
-
-
-
-      }
-      break;
-
-    //if PUT
-    case 'PUT':
-    switch (parsedUrl.pathname) {
-        case '/prev':
-            commands.prev(end);
-            break;
-        case '/next':
-            commands.next(end);
-            break;
-        case '/pause':
-            commands.pause(end);
-            break;
-        case '/play':
-            commands.play(end);
-            break;
-        case '/decrescendo':
-            commands.decrescendo(end);
-            break;
-        case '/maxvolume':
-            commands.maxvolume(end);
-            break;
-        case '/volumeup':
-            commands.volumeup(end);
-            break;
-        case '/volumedown':
-            commands.volumedown(end);
-            break;
-        case '/nextslide':
-            commands.nextslide(end);
-            break;
-        case '/prevslide':
-            commands.prevslide(end);
-            break;
-        default:
-            console.log("Unknown pathname: " + parsedUrl.pathname)
-            res.end();
-            break;
-    }
-  }
-  */
 
 }
 
