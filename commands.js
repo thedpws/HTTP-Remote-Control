@@ -5,8 +5,12 @@ const exe = (command, callback) => {
   // you can set options.stdio if you want it to go elsewhere
   console.log("\texecute: " + command);
   execSync(command);
-  getCurrTrack(callback)
+  getCurrTrack(callback);
 };
+
+getTrackInfo = callback => {
+  let obj = getCurrTrack
+}
 
 getCurrTrack = callback => {
   const spawn = require('child_process').spawn;
@@ -29,7 +33,7 @@ exports.decrescendo = (callback) => {
 
 //previous track
 exports.prev = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to previous track\'";
+  let command = "./scripts/prevtrack.sh";
   exe(command, callback);
 };
 

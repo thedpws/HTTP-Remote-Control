@@ -47,7 +47,6 @@ const requestHandler = (req, res) => {
     res.write(jsData);
     res.end();
   }
-
   if (req.method === 'PUT'){
     switch (parsedUrl.pathname) {
         case '/prev':

@@ -1,20 +1,6 @@
 
-
-function updateCurrentTrack(){
-  console.log("updateCurrentTrack()");
-    let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", '/next', true);
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            let result = xmlHttp.response;
-            setCurrentTrack(result);
-            console.log(xmlHttp.response);
-        }
-    };
-    xmlHttp.send();
-}
-
 function sendPutTo(pathname){
+  if (pathname === 'play') onTrackEnd();
   console.log(pathname);
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = () => {
