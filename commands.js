@@ -5,30 +5,64 @@ const exe = (command, callback) => {
   // you can set options.stdio if you want it to go elsewhere
   console.log("\texecute: " + command);
   execSync(command);
-  getCurrTrack(callback);
+  getTrackInfo(callback);
 };
 
 getTrackInfo = callback => {
-  let obj = getCurrTrack
-}
+  obj = {}
+  getCurrTrack(obj, callback)
+};
 
-getCurrTrack = callback => {
+getCurrTrack = (obj, callback) => {
   const spawn = require('child_process').spawn;
   const child = spawn('./scripts/currtrack.sh');
   child.stdout.setEncoding('utf8');
   child.stdout.on('data', data => {
-    if (callback) callback(data);
     console.log(data);
+    obj.track = data;
+    getCurrDuration(obj, callback);
   });
-
 };
+
+getCurrDuration = (obj, callback) => {
+  const spawn = require('child_process').spawn;
+  const child = spawn('./scripts/currduration.sh');
+  child.stdout.setEncoding('utf8');
+  child.stdout.on('data', data => {
+    console.log(data);
+    obj.duration = data;
+    getCurrPos(obj, callback);
+  });
+};
+
+getCurrPos = (obj, callback) => {
+  const spawn = require('child_process').spawn;
+  const child = spawn('./scripts/currpos.sh');
+  child.stdout.setEncoding('utf8');
+  child.stdout.on('data', data => {
+    console.log(data);
+    obj.position = data;
+    finish(obj, callback);
+  });
+  return undefined;
+}
+
+finish = (obj, callback) => {
+  console.log(obj);
+  if (callback) callback(obj);
+}
+
+function* generator(){
+  const track = yield getCurrTrack();
+  const duration = yield getCurrDuration();
+  const pos = yield getCurrPos();
+}
+
 
 exports.decrescendo = (callback) => {
   var vol = 10;
   let command = "./scripts/decrescendo.sh";
-  exe(command);
-  exports.maxvolume();
-  exports.next(callback);
+  exe(command, callback);
 }
 
 //previous track

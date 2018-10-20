@@ -26,8 +26,8 @@
         <div class="col-md-12">
             <h3>Pause / Play</h3>
             <div class="container row">
-              <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/play')">Play</button>
-              <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/pause')">Pause</button>
+              <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/play'); unpause();">Play</button>
+              <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/pause'); pause();">Pause</button>
             </div>
             <div class="container row">
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/prev')">prev</button>
@@ -41,7 +41,7 @@
         <div class="col-md-12">
           <h3>Volume Control</h3>
           <div class="container row">
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/decrescendo')">Dec.</button>
+            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/decrescendo'); pause();">Dec.</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/maxvolume')">Max Vol</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumeup')">Vol+</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumedown')">Vol-</button>
@@ -65,13 +65,16 @@
           <h4>Update "Current Track"</h4>
           <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/update')">Update</button>
           <p>Remote control currently auto-updates on pressing <i>next, prev, etc.</i> It does not update when tracks autoplay into the next. Use <i>update</i> to manually update.</p>
+          <p id="timeleft"></p>
+          <p id="trackposition"></p>
+          <p id="trackduration"></p>
 	</div>
       </div>
     </div>
 
 
     <nav class="navbar navbar-dark bg-primary fixed-bottom">
-      <a class="navbar-brand" id="currentTrack">Current track</a>
+      <a class="navbar-brand" id="trackname">Current track</a>
       <form class="form-inline">
       </form>
     </nav>

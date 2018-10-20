@@ -27,13 +27,6 @@ fs.readFile('./scripts.js', 'utf8', function(err, data) {
 const requestHandler = (req, res) => {
   const parsedUrl = url.parse(req.url);
 
-  //this callback sends the response with an object
-  end = (obj) => {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    const json = JSON.stringify(obj);
-    res.end(obj);
-  };
-
   if (req.method === 'GET' && parsedUrl.pathname === '/'){
     res.writeHead(200, {'Content-Type': 'html'});
     res.write(htmlData);
@@ -47,6 +40,16 @@ const requestHandler = (req, res) => {
     res.write(jsData);
     res.end();
   }
+
+  //this callback sends the response with an object
+  end = (obj) => {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    const json = JSON.stringify(obj);
+    console.log(json);
+    res.end(json);
+  };
+
+
   if (req.method === 'PUT'){
     switch (parsedUrl.pathname) {
         case '/prev':
