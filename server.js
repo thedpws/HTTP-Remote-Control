@@ -79,6 +79,9 @@ const requestHandler = (req, res) => {
         case '/prevslide':
             commands.prevslide(end);
             break;
+        case '/update':
+            commands.update(end);
+            break;
         default:
             console.log("Unknown pathname: " + parsedUrl.pathname)
             res.end();

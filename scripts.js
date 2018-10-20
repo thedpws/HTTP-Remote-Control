@@ -1,6 +1,5 @@
 
 function sendPutTo(pathname){
-  if (pathname === 'play') onTrackEnd();
   console.log(pathname);
   let xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = () => {

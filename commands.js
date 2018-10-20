@@ -82,3 +82,8 @@ exports.prevslide = (callback) => {
 exports.sysVol = (level, callback) => {
   let command = 'sudo osascript -e \'tell application \"System Events\" set'
 };
+
+exports.update = (callback) => {
+  let command = 'pwd'
+  exe(command, callback);
+}
