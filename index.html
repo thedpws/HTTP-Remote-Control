@@ -24,7 +24,8 @@
     <div class="">
       <div class="container">
         <div class="col-md-12">
-            <h3>Pause / Play</h3>
+            <h3 id="player-state">Waiting for server...</h3>
+            <h6 id="timer">0:00</h6>
             <div class="container row">
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/play'); unpause();">Play</button>
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/pause'); pause();">Pause</button>
@@ -40,8 +41,9 @@
 
         <div class="col-md-12">
           <h3>Volume Control</h3>
+          <h6 id="player-volume">Volume: --</h6>
           <div class="container row">
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/decrescendo'); pause();">Dec.</button>
+            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/decrescendo'); pause(); document.getElementById('player-volume').innerText = 'Volume: --'">Dec.</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/maxvolume')">Max Vol</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumeup')">Vol+</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumedown')">Vol-</button>
@@ -59,16 +61,11 @@
           </div>
 
         </div>
-      </div>
-      <div class="container">
+
         <div class="col-md-12">
-          <h4>Update "Current Track"</h4>
-          <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/update')">Update</button>
-          <p>Remote control currently auto-updates on pressing <i>next, prev, etc.</i> It does not update when tracks autoplay into the next. Use <i>update</i> to manually update.</p>
-          <p id="timeleft"></p>
-          <p id="trackposition"></p>
-          <p id="trackduration"></p>
-	</div>
+          <h6 id="next-track">Next track: --</h6>
+        </div>
+
       </div>
     </div>
 

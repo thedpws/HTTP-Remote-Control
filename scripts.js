@@ -1,3 +1,5 @@
+window.onload = sendPutTo('/update');
+
 let trackname = undefined;
 let trackposition = undefined;
 let trackduration = undefined;
@@ -15,8 +17,8 @@ function startCountDown(){
   if (seconds < 10) seconds = '0' + seconds;
   console.log("startCountDown!");
   countDownStarted = true;
-  document.getElementById("timeleft").innerText = minutes + ':' + seconds;
-  if (timeleft < 0) sendPutTo('/update')
+  document.getElementById("timer").innerText = minutes + ':' + seconds;
+  if (timeleft < 0) sendPutTo('/update');
   if (!paused) timeleft--;
   setTimeout(startCountDown, 1000);
 }
@@ -31,14 +33,6 @@ function sendPutTo(pathname){
   xmlHttp.send();
 }
 
-function setCurrentTrack(name){
-    document.getElementById("currentTrack").innerText = name;
-}
-
-function getCurrentTrack(){
-    return document.getElementById("currentTrack").innerText;
-}
-
 function updateInfo(obj){
   console.log(obj);
   let json = JSON.parse(obj);
@@ -48,7 +42,10 @@ function updateInfo(obj){
   if (trackname = undefined) return;
   timeleft = Number.parseFloat(trackduration) - Number.parseFloat(trackposition);
   document.getElementById("trackname").innerText = json.track;
-  document.getElementById("trackposition").innerText = json.position;
-  document.getElementById("trackduration").innerText = json.duration;
+  document.getElementById("player-state").innerText = json.playerState[0].toUpperCase() + json.playerState.slice(1);
+  document.getElementById("player-volume").innerText = "Volume: " + json.volume;
+  document.getElementById("next-track").innerText = "Next track: " + json.nextTrack;
+  if (json.playerState === "playing") paused = false;
+  else paused = true;
   if (!countDownStarted) startCountDown();
 }

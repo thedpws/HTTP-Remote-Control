@@ -1,123 +1,131 @@
+const osascript = require('node-osascript');
+
 const {execSync} = require('child_process');
 
-const exe = (command, callback) => {
-  // stderr is sent to stdout of parent process
-  // you can set options.stdio if you want it to go elsewhere
+const fs = require('fs');
+
+const commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
+
+
+function exe(command, callback){
   console.log("\texecute: " + command);
-  execSync(command);
-  getTrackInfo(callback);
+  osascript.execute(command, (err, result, raw) => {
+    console.log(result);
+    getTrackInfo(callback);
+  });
 };
 
-getTrackInfo = callback => {
+//TODO implement as pipeline
+// obj = (getCurrTrack) (getCurrDuration) (getCurrPos) (obj)
+function getTrackInfo(callback){
   obj = {}
   getCurrTrack(obj, callback)
 };
 
-getCurrTrack = (obj, callback) => {
-  const spawn = require('child_process').spawn;
-  const child = spawn('./scripts/currtrack.sh');
-  child.stdout.setEncoding('utf8');
-  child.stdout.on('data', data => {
-    console.log(data);
-    obj.track = data;
-    getCurrDuration(obj, callback);
+function getCurrTrack(obj, callback){
+
+  osascript.execute(commands.iTunes.readTrackName, (err, result, raw) => {
+    //if (result.split(" ").length == 1) result = "Hymn " + result.slice(0, 3);
+    obj.track = result;
+    getCurrDuration(obj, callback)
   });
 };
 
-getCurrDuration = (obj, callback) => {
-  const spawn = require('child_process').spawn;
-  const child = spawn('./scripts/currduration.sh');
-  child.stdout.setEncoding('utf8');
-  child.stdout.on('data', data => {
-    console.log(data);
-    obj.duration = data;
+function getCurrDuration(obj, callback){
+  osascript.execute(commands.iTunes.readTrackLength, (err, result, raw) => {
+    obj.duration = result;
     getCurrPos(obj, callback);
   });
 };
 
-getCurrPos = (obj, callback) => {
-  const spawn = require('child_process').spawn;
-  const child = spawn('./scripts/currpos.sh');
-  child.stdout.setEncoding('utf8');
-  child.stdout.on('data', data => {
-    console.log(data);
-    obj.position = data;
-    finish(obj, callback);
+function getCurrPos(obj, callback){
+  osascript.execute(commands.iTunes.readPlayerPosition, (err, result, raw) => {
+    obj.position = result;
+    getPlayerState(obj, callback);
   });
-  return undefined;
 }
 
-finish = (obj, callback) => {
+function getPlayerState(obj, callback){
+  osascript.execute(commands.iTunes.readPlayerState, (err, result, raw) => {
+    result = result.replace("\n", "");
+    obj.playerState = result;
+    getPlayerVolume(obj, callback);
+  })
+}
+
+function getPlayerVolume(obj, callback){
+  osascript.execute(commands.iTunes.readVolume, (err, result, raw) => {
+    obj.volume = result;
+    getPlayerNextTrack(obj, callback);
+  })
+}
+
+function getPlayerNextTrack(obj, callback){
+  osascript.execute(commands.iTunes.readNextTrack, (err, result, raw) => {
+    obj.nextTrack = result;
+    finish(obj,callback);
+  })
+}
+
+function finish(obj, callback){
   console.log(obj);
   if (callback) callback(obj);
 }
 
-function* generator(){
-  const track = yield getCurrTrack();
-  const duration = yield getCurrDuration();
-  const pos = yield getCurrPos();
-}
-
 
 exports.decrescendo = (callback) => {
-  var vol = 10;
-  let command = "./scripts/decrescendo.sh";
+  const command = commands.iTunes.decrescendo;
   exe(command, callback);
 }
 
 //previous track
 exports.prev = (callback) => {
-  let command = "./scripts/prevtrack.sh";
+  const command = commands.iTunes.prevTrack;
   exe(command, callback);
 };
 
 //next track
 exports.next = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to next track\'";
+  const command = commands.iTunes.nextTrack;
   exe(command, callback);
 };
 
 exports.play = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to play\'";
+  const command = commands.iTunes.play;
   exe(command, callback);
 };
 
 exports.pause = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to pause\'";
+  const command = commands.iTunes.pause;
   exe(command, callback);
 };
 
 exports.maxvolume = (callback) => {
-  //let command = "sudo osascript -e \"set Volume 10\"";
-  let command = "sudo osascript -e \'tell app \"iTunes\" to set the sound volume to 100\'";
+  const command = commands.iTunes.maxVolume;
   exe(command, callback);
 };
 
 exports.volumeup = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to set the sound volume to (the sound volume + 10)\'";
+  const command = commands.iTunes.volUp;
   exe(command, callback);
 };
 
 exports.volumedown = (callback) => {
-  let command = "sudo osascript -e \'tell application \"iTunes\" to set the sound volume to (the sound volume - 10)\'";
+  const command = commands.iTunes.volDown;
   exe(command, callback);
 };
 
 exports.nextslide = (callback) => {
-  let command = 'sudo ./scripts/nextslide.sh';
+  const command = commands.PowerPoint.nextSlide;
   exe(command, callback);
 };
 
 exports.prevslide = (callback) => {
-  let command = 'sudo ./scripts/prevslide.sh';
+  const command = commands.PowerPoint.prevSlide;
   exe(command, callback);
 };
 
-exports.sysVol = (level, callback) => {
-  let command = 'sudo osascript -e \'tell application \"System Events\" set'
-};
-
 exports.update = (callback) => {
-  let command = 'pwd'
+  let command = '\"hi\"';
   exe(command, callback);
 }
