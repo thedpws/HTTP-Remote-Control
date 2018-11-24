@@ -10,7 +10,7 @@ const commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
 function exe(command, callback){
   console.log("\texecute: " + command);
   osascript.execute(command, (err, result, raw) => {
-    console.log(result);
+    //console.log(result);
     getTrackInfo(callback);
   });
 };
@@ -63,12 +63,19 @@ function getPlayerVolume(obj, callback){
 function getPlayerNextTrack(obj, callback){
   osascript.execute(commands.iTunes.readNextTrack, (err, result, raw) => {
     obj.nextTrack = result;
-    finish(obj,callback);
+    getSystemVolume(obj,callback);
+  })
+}
+
+function getSystemVolume(obj, callback){
+  osascript.execute(commands.System.readVolume, (err, result, raw) => {
+    obj.systemVolume = result;
+    finish(obj, callback);
   })
 }
 
 function finish(obj, callback){
-  console.log(obj);
+  //console.log(obj);
   if (callback) callback(obj);
 }
 
@@ -129,3 +136,13 @@ exports.update = (callback) => {
   let command = '\"hi\"';
   exe(command, callback);
 }
+
+exports.sysVolUp = (callback) => {
+  const command = commands.System.volUp;
+  exe(command, callback);
+};
+
+exports.sysVolDown = (callback) => {
+  const command = commands.System.volDown;
+  exe(command, callback);
+};

@@ -45,7 +45,7 @@ const requestHandler = (req, res) => {
   end = (obj) => {
     res.writeHead(200, {'Content-Type': 'application/json'});
     const json = JSON.stringify(obj);
-    console.log(json);
+    //console.log(json);
     res.end(json);
   };
 
@@ -84,6 +84,12 @@ const requestHandler = (req, res) => {
             break;
         case '/update':
             commands.update(end);
+            break;
+        case '/sysvolup':
+            commands.sysVolUp(end);
+            break;
+        case '/sysvoldown':
+            commands.sysVolDown(end);
             break;
         default:
             console.log("Unknown pathname: " + parsedUrl.pathname)

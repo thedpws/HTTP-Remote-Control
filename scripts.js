@@ -45,6 +45,7 @@ function updateInfo(obj){
   document.getElementById("player-state").innerText = json.playerState[0].toUpperCase() + json.playerState.slice(1);
   document.getElementById("player-volume").innerText = "Volume: " + json.volume;
   document.getElementById("next-track").innerText = "Next track: " + json.nextTrack;
+  document.getElementById("system-volume").innerText = json.systemVolume;
   if (json.playerState === "playing") paused = false;
   else paused = true;
   if (!countDownStarted) startCountDown();

@@ -24,13 +24,11 @@
     <div class="">
       <div class="container">
         <div class="col-md-12">
-            <h3 id="player-state">Waiting for server...</h3>
-            <h6 id="timer">0:00</h6>
+          <h3 id="trackname">Current track</h3>
+            <h3 id="player-state">Waiting for server...</h3><h6 id="timer">-:--</h6>
             <div class="container row">
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/play'); unpause();">Play</button>
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/pause'); pause();">Pause</button>
-            </div>
-            <div class="container row">
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/prev')">prev</button>
               <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/next')">next</button>
             </div>
@@ -52,6 +50,17 @@
       </div>
 
       <div class="container">
+        <div class="col-md-12">
+          <h3>System Audio</h3>
+          <h6 id="system-volume">System Volume: --</h6>
+          <div class="container row">
+            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/sysvoldown')">Vol-</button>
+            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/sysvolup')">Vol+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
 
         <div class="col-md-12">
           <h3>PowerPoint</h3>
@@ -68,13 +77,6 @@
 
       </div>
     </div>
-
-
-    <nav class="navbar navbar-dark bg-primary fixed-bottom">
-      <a class="navbar-brand" id="trackname">Current track</a>
-      <form class="form-inline">
-      </form>
-    </nav>
 
     <!-- myscripts -->
     <script src="scripts.js"></script>

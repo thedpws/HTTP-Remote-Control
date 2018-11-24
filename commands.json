@@ -18,5 +18,10 @@
   "PowerPoint" : {
     "nextSlide" : "tell application \"Microsoft PowerPoint\"\nset ssPresentation to slide show settings of active presentation\nrun slide show ssPresentation\ngo to next slide slide show view of slide show window 1\nend tell",
     "prevSlide" : "tell application \"Microsoft PowerPoint\"\nset ssPresentation to slide show settings of active presentation\nrun slide show ssPresentation\ngo to previous slide slide show view of slide show window 1\nend tell"
+  },
+  "System" : {
+    "volUp" : "set volume output volume (output volume of (get volume settings) + 10) --100%",
+    "volDown" : "set volume output volume (output volume of (get volume settings) - 10) --100%",
+    "readVolume" : "get output volume of (get volume settings)"
   }
 }
