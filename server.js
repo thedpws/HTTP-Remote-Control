@@ -1,28 +1,22 @@
 const http = require('http'),
   url = require('url'),
   fs = require('fs'),
-  port = 8080;
+  port = 1914;
 
-const commands = require('./commands');
-//const data = require('./data');
+const commands = require('./commands/commands');
 
 let htmlData = undefined;
 let jsData = undefined;
 
-fs.readFile('./index.html', 'utf8', function(err, data) {
+fs.readFile('./client/index.html', 'utf8', function(err, data) {
   if (err) return;
   else htmlData = data;
 });
 
-fs.readFile('./scripts.js', 'utf8', function(err, data) {
+fs.readFile('./client/scripts.js', 'utf8', function(err, data) {
   if (err) return;
   else jsData = data;
 });
-
-
-
-
-//let currTrack = undefined;
 
 const requestHandler = (req, res) => {
   const parsedUrl = url.parse(req.url);
@@ -42,10 +36,9 @@ const requestHandler = (req, res) => {
   }
 
   //this callback sends the response with an object
-  end = (obj) => {
+  end = obj => {
     res.writeHead(200, {'Content-Type': 'application/json'});
     const json = JSON.stringify(obj);
-    //console.log(json);
     res.end(json);
   };
 
@@ -104,6 +97,7 @@ const requestHandler = (req, res) => {
 const server = http.createServer(requestHandler).listen(port);
 console.log("Listening on port " + port);
 
+//print the address
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-  console.log('addr: '+add);
+  console.log('Address: '+add);
 });

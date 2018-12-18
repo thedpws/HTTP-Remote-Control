@@ -4,7 +4,7 @@ const {execSync} = require('child_process');
 
 const fs = require('fs');
 
-const commands = JSON.parse(fs.readFileSync('commands.json', 'utf8'));
+const commands = JSON.parse(fs.readFileSync('commands/commands.json', 'utf8'));
 
 
 function exe(command, callback){
