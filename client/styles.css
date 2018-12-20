@@ -12,3 +12,7 @@
     -moz-appearance: none;
     appearance: none;
 }
+
+.grid {
+    display: grid;
+}

@@ -1,3 +1,8 @@
+const lsws = 'lsws';
+const live = 'live';
+//parsing command line arguments
+const arg = process.argv[2];
+
 const http = require('http'),
   url = require('url'),
   fs = require('fs'),
@@ -7,10 +12,9 @@ const commands = require('./commands/commands');
 
 let htmlData = undefined;
 let jsData = undefined;
-
-fs.readFile('./client/index.html', 'utf8', function(err, data) {
-  if (err) return;
-  else htmlData = data;
+fs.readFile(`./client/${arg}.html`, 'utf8', function(err, data) {
+    if (err) console.log(`Error reading HTML: ${err}`);
+    else htmlData = data;
 });
 
 fs.readFile('./client/scripts.js', 'utf8', function(err, data) {
