@@ -18,20 +18,6 @@
 
   <body>
     <div class="grid">
-          <h3 id="trackname">Current track</h3>
-            <h3 id="player-state">Waiting for server...</h3><h6 id="timer">-:--</h6>
-              <button type="button" onclick="sendPutTo('/play'); unpause();">Play</button>
-              <button type="button" onclick="sendPutTo('/pause'); pause();">Pause</button>
-              <button type="button" onclick="sendPutTo('/prev')">prev</button>
-              <button type="button" onclick="sendPutTo('/next')">next</button>
-
-          <h3>Volume Control</h3>
-          <h6 id="player-volume">Volume: --</h6>
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/decrescendo'); pause(); document.getElementById('player-volume').innerText = 'Volume: --'">Dec.</button>
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/maxvolume')">Max Vol</button>
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumeup')">Vol+</button>
-            <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/volumedown')">Vol-</button>
-
           <h3>System Audio</h3>
           <h6 id="system-volume">System Volume: --</h6>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/sysvoldown')">Vol-</button>
@@ -41,7 +27,9 @@
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/prevslide')">Prev slide</button>
             <button type="button" class="btn btn-outline-primary" onclick="sendPutTo('/nextslide')">Next slide</button>
 
-          <h6 id="next-track">Next track: --</h6>
+          <h3>Switch Tasks</h3>
+          <button type="button" onclick="sendPutTo('/swipeleft')">Left</button>
+          <button type="button" onclick="sendPutTo('/swiperight')">Right</button>
     <!--end grid -->
     </div>
 

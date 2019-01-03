@@ -17,7 +17,7 @@ fs.readFile(`./client/${arg}.html`, 'utf8', function(err, data) {
     else htmlData = data;
 });
 
-fs.readFile('./client/scripts.js', 'utf8', function(err, data) {
+fs.readFile(`./client/${arg}.js`, 'utf8', function(err, data) {
   if (err) return;
   else jsData = data;
 });
@@ -87,6 +87,12 @@ const requestHandler = (req, res) => {
             break;
         case '/sysvoldown':
             commands.sysVolDown(end);
+            break;
+        case '/swipeleft':
+            commands.swipeLeft(end);
+            break;
+        case '/swiperight':
+            commands.swipeRight(end);
             break;
         default:
             console.log("Unknown pathname: " + parsedUrl.pathname)

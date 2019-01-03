@@ -146,3 +146,13 @@ exports.sysVolDown = (callback) => {
   const command = commands.System.volDown;
   exe(command, callback);
 };
+
+exports.swipeLeft = (callback) => {
+    const command = commands.System.swipeLeft;
+    exe(command, callback);
+}
+
+exports.swipeRight = (callback) => {
+    const command = commands.System.swipeRight;
+    exe(command, callback);
+}
