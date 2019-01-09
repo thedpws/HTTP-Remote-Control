@@ -17,67 +17,119 @@ function exe(command, callback){
 
 //TODO implement as pipeline
 // obj = (getCurrTrack) (getCurrDuration) (getCurrPos) (obj)
-function getTrackInfo(callback){
+async function getTrackInfo(callback){
   obj = {}
-  getCurrTrack(obj, callback)
+
+  obj = {
+    /*
+    track: await getCurrTrack(),
+    duration: await getCurrDuration(),
+    position: await getCurrPos(),
+    playerState: await getPlayerState(),
+    volume: await getPlayerVolume(),
+    nextTrack: await getPlayerNextTrack(),
+    */
+    systemVolume: await getSystemVolume().catch(err => console.log(err))
+  };
+  /*
+  obj.track = await getCurrTrack();
+  obj.duration = await getCurrDuration();
+  obj.position = await getCurrPos();
+  obj.playerState = await getPlayerState();
+  obj.volume = await getPlayerVolume();
+  obj.nextTrack = await getPlayerNextTrack();
+  obj.systemVolume = await getSystemVolume();
+  */
+  if (callback) callback(obj);
+  console.log(obj);
 };
 
-function getCurrTrack(obj, callback){
+
+async function getCurrTrack(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.iTunes.readTrackName, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
 
   osascript.execute(commands.iTunes.readTrackName, (err, result, raw) => {
     //if (result.split(" ").length == 1) result = "Hymn " + result.slice(0, 3);
-    obj.track = result;
-    getCurrDuration(obj, callback)
+    return result;
   });
 };
 
-function getCurrDuration(obj, callback){
+async function getCurrDuration(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands. iTunes.readTrackLength, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
   osascript.execute(commands.iTunes.readTrackLength, (err, result, raw) => {
-    obj.duration = result;
-    getCurrPos(obj, callback);
+    return result;
   });
 };
 
-function getCurrPos(obj, callback){
+async function getCurrPos(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.iTunes.readPlayerPosition, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
   osascript.execute(commands.iTunes.readPlayerPosition, (err, result, raw) => {
-    obj.position = result;
-    getPlayerState(obj, callback);
+    return result;
   });
 }
 
-function getPlayerState(obj, callback){
+async function getPlayerState(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.iTunes.readPlayerState, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
   osascript.execute(commands.iTunes.readPlayerState, (err, result, raw) => {
     result = result.replace("\n", "");
-    obj.playerState = result;
-    getPlayerVolume(obj, callback);
-  })
+    return result;
+  });
 }
 
-function getPlayerVolume(obj, callback){
+async function getPlayerVolume(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.iTuens.readVolume, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
+    
   osascript.execute(commands.iTunes.readVolume, (err, result, raw) => {
-    obj.volume = result;
-    getPlayerNextTrack(obj, callback);
-  })
+    return result;
+  });
 }
 
-function getPlayerNextTrack(obj, callback){
+async function getPlayerNextTrack(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.iTunes.readNextTrack, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
   osascript.execute(commands.iTunes.readNextTrack, (err, result, raw) => {
-    obj.nextTrack = result;
-    getSystemVolume(obj,callback);
-  })
+    return result;
+  });
 }
 
-function getSystemVolume(obj, callback){
-  osascript.execute(commands.System.readVolume, (err, result, raw) => {
-    obj.systemVolume = result;
-    finish(obj, callback);
-  })
+async function getSystemVolume(){
+    return new Promise( (resolve, reject) => {
+        osascript.execute(commands.System.readVolume, (err, result, raw) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    });
 }
 
-function finish(obj, callback){
-  //console.log(obj);
-  if (callback) callback(obj);
-}
 
 
 exports.decrescendo = (callback) => {
