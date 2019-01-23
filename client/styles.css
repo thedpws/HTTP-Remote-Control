@@ -1,4 +1,13 @@
+* {
+    -webkit-appearance: none !important;
+}
 
+.ppt {
+    grid-area: ppt;
+}
+.container{
+    padding: 10px;
+}
 .center{
     text-align: center;
 }
@@ -15,4 +24,15 @@
 
 .grid {
     display: grid;
+}
+
+.btn {
+    font-size: 20px;
+    width: 100px;
+    display: inline-block;
+    align: left;
+    
+}
+* {
+    -webkit-transform: none;
 }

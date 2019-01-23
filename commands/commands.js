@@ -21,14 +21,12 @@ async function getTrackInfo(callback){
   obj = {}
 
   obj = {
-    /*
     track: await getCurrTrack(),
     duration: await getCurrDuration(),
     position: await getCurrPos(),
     playerState: await getPlayerState(),
     volume: await getPlayerVolume(),
     nextTrack: await getPlayerNextTrack(),
-    */
     systemVolume: await getSystemVolume().catch(err => console.log(err))
   };
   /*
@@ -98,7 +96,7 @@ async function getPlayerState(){
 
 async function getPlayerVolume(){
     return new Promise( (resolve, reject) => {
-        osascript.execute(commands.iTuens.readVolume, (err, result, raw) => {
+        osascript.execute(commands.iTunes.readVolume, (err, result, raw) => {
             if (err) reject(err);
             else resolve(result);
         });

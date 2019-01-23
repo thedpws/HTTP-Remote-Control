@@ -12,6 +12,7 @@ const commands = require('./commands/commands');
 
 let htmlData = undefined;
 let jsData = undefined;
+let cssData = undefined;
 fs.readFile(`./client/${arg}.html`, 'utf8', function(err, data) {
     if (err) console.log(`Error reading HTML: ${err}`);
     else htmlData = data;
@@ -20,6 +21,11 @@ fs.readFile(`./client/${arg}.html`, 'utf8', function(err, data) {
 fs.readFile(`./client/${arg}.js`, 'utf8', function(err, data) {
   if (err) return;
   else jsData = data;
+});
+
+fs.readFile('./client/styles.css', 'utf8', function(err, data) {
+    if (err) return;
+    else cssData = data;
 });
 
 const requestHandler = (req, res) => {
@@ -36,6 +42,14 @@ const requestHandler = (req, res) => {
       'Content-Type': 'application/javascript'
     });
     res.write(jsData);
+    res.end();
+  }
+
+  if (req.method === 'GET' && parsedUrl.pathname === '/styles.css'){
+    res.writeHead(200, {
+        'Content-Type': 'text/css'
+    });
+    res.write(cssData);
     res.end();
   }
 
