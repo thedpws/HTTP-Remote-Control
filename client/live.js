@@ -12,14 +12,15 @@ unpause = () => {paused = false;}
 countDownStarted = false;
 
 function startCountDown(){
+  setTimeout(startCountDown, 1000);
   let minutes = Math.floor(timeleft / 60);
   let seconds = Math.round(timeleft - 60*minutes);
   if (seconds < 10) seconds = '0' + seconds;
   countDownStarted = true;
   document.getElementById("timer").innerText = minutes + ':' + seconds;
-  if (timeleft < 0) sendPutTo('/update');
+  if (timeleft <= 0) sendPutTo('/update');
   if (!paused) timeleft--;
-  setTimeout(startCountDown, 1000);
+  console.log(timeleft);
 }
 
 function sendPutTo(pathname){
@@ -33,13 +34,12 @@ function sendPutTo(pathname){
 }
 
 function updateInfo(obj){
-  console.log(obj);
   let json = JSON.parse(obj);
   trackname = json.track;
   trackposition = json.position;
   trackduration = json.duration;
   if (trackname = undefined) return;
-  timeleft = Number.parseFloat(trackduration) - Number.parseFloat(trackposition);
+  timeleft = Number.parseFloat(trackduration) - Number.parseFloat(trackposition) - 1 ;
   document.getElementById("trackname").innerText = json.track;
   document.getElementById("player-state").innerText = json.playerState[0].toUpperCase() + json.playerState.slice(1);
   document.getElementById("player-volume").innerText = "Volume: " + json.volume;
