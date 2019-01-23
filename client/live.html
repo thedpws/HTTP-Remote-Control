@@ -9,7 +9,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <!--link rel="stylesheet" type="text/css" href="styles.css"-->
     <title>Remote control</title>
 
 
@@ -22,7 +22,7 @@
             <h3 id="player-state">Waiting for server...</h3><h6 id="timer">-:--</h6>
               <button type="button" onclick=" sendPutTo('/play'); ">Play</button>
               <button type="button" onclick=" sendPutTo('/pause'); ">Pause</button>
-              <button type="button" onclick="sendPutTo('/prev')">prev</button>
+              <button type="button" class="btn" onclick="sendPutTo('/prev')">prev</button>
               <button type="button" onclick="sendPutTo('/next')">next</button>
 
           <h3>Volume Control</h3>

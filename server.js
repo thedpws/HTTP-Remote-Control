@@ -24,7 +24,10 @@ fs.readFile(`./client/${arg}.js`, 'utf8', function(err, data) {
 });
 
 fs.readFile('./client/styles.css', 'utf8', function(err, data) {
-    if (err) return;
+    if (err) {
+        console.log(err);
+        return;
+    }
     else cssData = data;
 });
 
