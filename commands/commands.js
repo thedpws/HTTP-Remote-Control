@@ -10,7 +10,6 @@ const commands = JSON.parse(fs.readFileSync('commands/commands.json', 'utf8'));
 function exe(command, callback){
   console.log("\texecute: " + command);
   osascript.execute(command, (err, result, raw) => {
-    //console.log(result);
     getTrackInfo(callback);
   });
 };
@@ -18,8 +17,6 @@ function exe(command, callback){
 //TODO implement as pipeline
 // obj = (getCurrTrack) (getCurrDuration) (getCurrPos) (obj)
 async function getTrackInfo(callback){
-  obj = {}
-
   obj = {
     /*
     track: await getCurrTrack(),
@@ -31,15 +28,6 @@ async function getTrackInfo(callback){
     */
     systemVolume: await getSystemVolume().catch(err => console.log(err))
   };
-  /*
-  obj.track = await getCurrTrack();
-  obj.duration = await getCurrDuration();
-  obj.position = await getCurrPos();
-  obj.playerState = await getPlayerState();
-  obj.volume = await getPlayerVolume();
-  obj.nextTrack = await getPlayerNextTrack();
-  obj.systemVolume = await getSystemVolume();
-  */
   if (callback) callback(obj);
   console.log(obj);
 };
