@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const shell = require('shelljs');
 const execute = (script) => {
-    shell.exec(`osascript ./plugins/itunes.plugin/${script}`);
+    shell.exec(`osascript ./plugins/powerpoint.plugin/${script}`);
 }
 
 router.post('/nextslide', (req, res) => {
