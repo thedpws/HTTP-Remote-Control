@@ -1,20 +1,19 @@
 {
-  "name": "htmlvolumecontrol",
+  "name": "tsvapp",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Remote control",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lsws": "node server.js lsws",
-    "live": "node server.js live",
-    "*": "echo \"Unknown script\"" 
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "dns": "^0.2.2",
-    "jsdom": "^12.0.0",
-    "node-osascript": "^2.1.0"
+    "express": "^4.16.4",
+    "mocha": "^6.1.4",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
+    "shelljs": "^0.8.3"
   }
 }
