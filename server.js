@@ -1,113 +1,43 @@
-const lsws = 'lsws';
-const live = 'live';
-//parsing command line arguments
+const express = require('express');
+const app = express();
 const arg = process.argv[2];
 
-const http = require('http'),
-  url = require('url'),
-  fs = require('fs'),
-  port = 1914;
+// Serve static files
+app.use(express.static('public'));
 
-const commands = require('./commands/commands');
+// Morgan request logger
+const morgan = require('morgan');
+app.use(morgan('tiny'));
 
-let htmlData = undefined;
-let jsData = undefined;
-fs.readFile(`./client/${arg}.html`, 'utf8', function(err, data) {
-    if (err) console.log(`Error reading HTML: ${err}`);
-    else htmlData = data;
+// Choose set of middleware to use
+// Prepare the response for plugins
+app.use('/', (req, res, next) => {
+    res.plugins = {};
+    next();
 });
-
-fs.readFile(`./client/${arg}.js`, 'utf8', function(err, data) {
-  if (err) return;
-  else jsData = data;
-});
-
-const requestHandler = (req, res) => {
-  const parsedUrl = url.parse(req.url);
-
-  if (req.method === 'GET' && parsedUrl.pathname === '/'){
-    res.writeHead(200, {'Content-Type': 'html'});
-    res.write(htmlData);
-    res.end();
-  }
-
-  if (req.method === 'GET' && parsedUrl.pathname === '/scripts.js') {
-    res.writeHead(200, {
-      'Content-Type': 'application/javascript'
-    });
-    res.write(jsData);
-    res.end();
-  }
-
-  //this callback sends the response with an object
-  end = obj => {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    const json = JSON.stringify(obj);
-    res.end(json);
-  };
-
-
-  if (req.method === 'PUT'){
-    switch (parsedUrl.pathname) {
-        case '/prev':
-            commands.prev(end);
-            break;
-        case '/next':
-            commands.next(end);
-            break;
-        case '/pause':
-            commands.pause(end);
-            break;
-        case '/play':
-            commands.play(end);
-            break;
-        case '/decrescendo':
-            commands.decrescendo(end);
-            break;
-        case '/maxvolume':
-            commands.maxvolume(end);
-            break;
-        case '/volumeup':
-            commands.volumeup(end);
-            break;
-        case '/volumedown':
-            commands.volumedown(end);
-            break;
-        case '/nextslide':
-            commands.nextslide(end);
-            break;
-        case '/prevslide':
-            commands.prevslide(end);
-            break;
-        case '/update':
-            commands.update(end);
-            break;
-        case '/sysvolup':
-            commands.sysVolUp(end);
-            break;
-        case '/sysvoldown':
-            commands.sysVolDown(end);
-            break;
-        case '/swipeleft':
-            commands.swipeLeft(end);
-            break;
-        case '/swiperight':
-            commands.swipeRight(end);
-            break;
-        default:
-            console.log("Unknown pathname: " + parsedUrl.pathname)
-            res.end();
-            break;
-    }
-  }
-
+let router;
+switch(arg){
+    case 'live':
+        console.log('Attached plugins for live service.');
+        router = require('./live.router');
+        break;
+    case 'lsws':
+        console.log('Attached plugins for live stream service.');
+        router = require('./lsws.router');
+        break;
+    default:
+        console.log(`Bad argument ${arg}. Exiting with exit code 1`);
+        process.exit(1);
+        break;
 }
+app.use('/', router);
 
-//starting the server
-const server = http.createServer(requestHandler).listen(port);
-console.log("Listening on port " + port);
-
-//print the address
-require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-  console.log('Address: '+add);
+/*
+// DEBUG: Prints out response
+app.use('/', (req, res, next) => {
+    console.log(res);
+    next();
 });
+*/
+
+const server = app.listen(1914, () => console.log("Started on port 1914"));
