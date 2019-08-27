@@ -15,29 +15,29 @@ app.use('/', (req, res, next) => {
     res.plugins = {};
     next();
 });
-let router;
+
+let plugins;
+
 switch(arg){
     case 'live':
-        console.log('Attached plugins for live service.');
-        router = require('./live.router');
+        plugins = require('./live');
         break;
     case 'lsws':
-        console.log('Attached plugins for live stream service.');
-        router = require('./lsws.router');
+        plugins = require('./lsws');
         break;
     default:
         console.log(`Bad argument ${arg}. Exiting with exit code 1`);
         process.exit(1);
         break;
 }
-app.use('/', router);
 
-/*
-// DEBUG: Prints out response
-app.use('/', (req, res, next) => {
-    console.log(res);
-    next();
-});
-*/
+// use all middleware
+plugins.forEach(plugin => app.use(plugin.middleware));
+
+// use routers per route
+plugins.forEach(plugin => app.use(plugin.route, plugin.router));
+
+app.all('/plugins', (req, res) => (res.status(200).send(res.plugins)));
+app.all('*', (req, res) => res.status(404).send('Bad Route'));
 
 const server = app.listen(1914, () => console.log("Started on port 1914"));

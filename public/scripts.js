@@ -3,6 +3,7 @@ window.onload = () => {
     let data;
     $.get('/plugins', x => {
         data = x;
+        console.log(x);
         for (property in data){
             console.log(property);
             const string = "#" + property;
@@ -13,12 +14,12 @@ window.onload = () => {
 
 }
 
-const resHandler = console.log;
+const handleResponse = console.log;
 
 const sendPost = path => {
     $('body').css('background-color', 'red');
     $.post(path, response => {
-        console.log(response);
+        handleResponse(response);
         $('body').css('background-color', 'white');
     });
 }

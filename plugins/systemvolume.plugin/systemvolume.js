@@ -10,21 +10,24 @@ router.post('/increase', (req, res) => {
     // send increase to systemvolume
     console.log('sysvol increase');
     execute('increase.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/decrease', (req, res) => {
     // send decrease to systemvolume
     console.log('sysvol decrease');
     execute('decrease.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 
 module.exports = {
     middleware: (req, res, next) => {
-        res.plugins.systemvolume = 'systemvolume support';
-        next();
+        exec('osascript ./plugins/systemvolume.plugin/getinfo.scpt', (stderr, stdout) => {
+            res.plugins['system-volume'] = stdout;
+            next();
+            });
     },
-    router: router
+    router: router,
+    route: '/system-volume'
 }

@@ -9,14 +9,14 @@ router.post('/nextslide', (req, res) => {
     // send play to powerpoint
     console.log('ppt next');
     execute('next.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/prevslide', (req, res) => {
     // send pause to powerpoint
     console.log('ppt previous');
     execute('prev.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 
@@ -26,5 +26,6 @@ module.exports = {
         res.plugins.powerpoint = 'powerpoint support';
         next();
     },
-    router: router
+    router: router,
+    route: '/powerpoint'
 }

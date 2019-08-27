@@ -10,21 +10,22 @@ router.post('/slideright', (req, res) => {
     // send slideright to taskswitcher
     console.log('taskswitcher slideright');
     execute('right.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/slideleft', (req, res) => {
     // send slideleft to taskswitcher
     console.log('taskswitcher slideleft');
     execute('left.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 
 module.exports = {
     middleware: (req, res, next) => {
-        res.plugins.taskswitcher = 'taskswitcher support';
+        res.plugins['task-switcher'] = 'task-switcher support';
         next();
     },
-    router: router
+    router: router,
+    route: '/task-switcher'
 }

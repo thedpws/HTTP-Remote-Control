@@ -10,48 +10,48 @@ router.post('/play', (req, res) => {
     // send play to itunes
     //console.log('itunes play');
     execute('play.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/pause', (req, res) => {
     // send pause to itunes
     //console.log('itunes pause');
     execute('pause.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/next', (req, res) => {
     // send next to itunes
     //console.log('itunes next');
     execute('next.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/prev', (req, res) => {
     // send prev to itunes
     //console.log('itunes prev');
     execute('prev.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/dec', (req, res) => {
     // send dec to itunes
     //console.log('itunes decrescendo');
     execute('dec.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 router.post('/volup', (req, res) => {
     // send volume up to itunes
     //console.log('itunes volume up');
     execute('volup.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 router.post('/voldown', (req, res) => {
     // send volume down to itunes
     //console.log('itunes volume down');
     execute('voldown.scpt');
-    res.sendStatus(200);
+    res.status(200).send(res.plugins);
 });
 
 function parse(output, cb) {
@@ -75,12 +75,13 @@ module.exports = {
     middleware: (req, res, next) => {
         // send current track, position, duration, next track
         exec('osascript ./plugins/itunes.plugin/getinfo.scpt', (stderr, stdout) => {
-            //if (stderr) console.log(stderr);
+            if (stderr) console.log(stderr);
             parse(stdout, info => {
-                res.plugins.itunes = info
-                next()
+                res.plugins.itunes = info;
+                next();
             });
         });
     },
-    router: router
+    router: router,
+    route: '/itunes'
 }
