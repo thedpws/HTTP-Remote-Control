@@ -24,7 +24,7 @@ router.post('/decrease', (req, res) => {
 module.exports = {
     middleware: (req, res, next) => {
         exec('osascript ./plugins/systemvolume.plugin/getinfo.scpt', (stderr, stdout) => {
-            res.plugins['system-volume'] = stdout;
+            res.plugins['system-volume'] = stdout.replace('\n', '');;
             next();
             });
     },
