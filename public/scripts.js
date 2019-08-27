@@ -6,7 +6,7 @@ window.onload = () => {
         console.log(x);
         for (property in data){
             console.log(property);
-            const string = "#" + property;
+            const string = "#" + property + '-plugin';
             console.log(string);
             $(string).show();
         }
@@ -14,7 +14,16 @@ window.onload = () => {
 
 }
 
-const handleResponse = console.log;
+// Each plugin is expected to return info as an object.
+const handleResponse = data => {
+  console.log(data);
+  for (plugin in data) {
+    for (property in data[plugin]) {
+      const e = document.getElementById(property);
+      if (e) e.innerText = data[plugin][property];
+    }
+  }
+}
 
 const sendPost = path => {
     $('body').css('background-color', 'red');

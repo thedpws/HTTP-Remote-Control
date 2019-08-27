@@ -1,57 +1,51 @@
 const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
-const execute = (script) => {
-    exec(`osascript ./plugins/itunes.plugin/${script}`);
+const execute = (script, next) => {
+    exec(`osascript ./plugins/itunes.plugin/${script}`, (stdout, stderr) => next());
 }
 
 
-router.post('/play', (req, res) => {
+router.use('/play', (req, res, next) => {
     // send play to itunes
     //console.log('itunes play');
-    execute('play.scpt');
-    res.status(200).send(res.plugins);
+    execute('play.scpt', next);
 });
 
-router.post('/pause', (req, res) => {
+router.use('/pause', (req, res, next) => {
     // send pause to itunes
     //console.log('itunes pause');
-    execute('pause.scpt');
-    res.status(200).send(res.plugins);
+    execute('pause.scpt', next);
 });
 
-router.post('/next', (req, res) => {
+router.use('/next', (req, res, next) => {
     // send next to itunes
     //console.log('itunes next');
-    execute('next.scpt');
-    res.status(200).send(res.plugins);
+    execute('next.scpt', next);
 });
 
-router.post('/prev', (req, res) => {
+router.use('/prev', (req, res, next) => {
     // send prev to itunes
     //console.log('itunes prev');
-    execute('prev.scpt');
-    res.status(200).send(res.plugins);
+    execute('prev.scpt', next);
 });
 
-router.post('/dec', (req, res) => {
+router.use('/dec', (req, res, next) => {
     // send dec to itunes
     //console.log('itunes decrescendo');
-    execute('dec.scpt');
-    res.status(200).send(res.plugins);
+    execute('dec.scpt', next);
 });
 
-router.post('/volup', (req, res) => {
+router.use('/volup', (req, res, next) => {
     // send volume up to itunes
     //console.log('itunes volume up');
-    execute('volup.scpt');
-    res.status(200).send(res.plugins);
+    execute('volup.scpt', next);
 });
-router.post('/voldown', (req, res) => {
+router.use('/voldown', (req, res, next) => {
     // send volume down to itunes
     //console.log('itunes volume down');
-    execute('voldown.scpt');
-    res.status(200).send(res.plugins);
+    execute('voldown.scpt', next);
+    res.status(200);
 });
 
 function parse(output, cb) {

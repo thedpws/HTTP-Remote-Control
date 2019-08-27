@@ -1,30 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
-const execute = (script) => {
-    exec(`osascript ./plugins/systemvolume.plugin/${script}`);
+const execute = (script, next) => {
+    exec(`osascript ./plugins/systemvolume.plugin/${script}`, (stderr, stdout) => next())
 }
 
 
-router.post('/increase', (req, res) => {
+router.use('/increase', (req, res, next) => {
     // send increase to systemvolume
     console.log('sysvol increase');
-    execute('increase.scpt');
-    res.status(200).send(res.plugins);
+    execute('increase.scpt', next);
 });
 
-router.post('/decrease', (req, res) => {
+router.use('/decrease', (req, res, next) => {
     // send decrease to systemvolume
     console.log('sysvol decrease');
-    execute('decrease.scpt');
-    res.status(200).send(res.plugins);
+    execute('decrease.scpt', next);
 });
 
 
 module.exports = {
     middleware: (req, res, next) => {
         exec('osascript ./plugins/systemvolume.plugin/getinfo.scpt', (stderr, stdout) => {
-            res.plugins['system-volume'] = stdout.replace('\n', '');;
+            res.plugins['system-volume'] = {};
+            res.plugins['system-volume']['system-volume'] = stdout.replace('\n', '');;
             next();
             });
     },

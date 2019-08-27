@@ -1,22 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
-const execute = (script) => {
-    exec(`osascript ./plugins/powerpoint.plugin/${script}`);
+const execute = (script, next) => {
+    exec(`osascript ./plugins/powerpoint.plugin/${script}`, (stdout, stderr) => next());
 }
 
-router.post('/nextslide', (req, res) => {
+router.use('/nextslide', (req, res, next) => {
     // send play to powerpoint
     console.log('ppt next');
-    execute('next.scpt');
-    res.status(200).send(res.plugins);
+    execute('next.scpt', next);
 });
 
-router.post('/prevslide', (req, res) => {
+router.use('/prevslide', (req, res, next) => {
     // send pause to powerpoint
     console.log('ppt previous');
-    execute('prev.scpt');
-    res.status(200).send(res.plugins);
+    execute('prev.scpt', next);
 });
 
 

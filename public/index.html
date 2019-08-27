@@ -20,7 +20,7 @@
 
     <body>
         <div class="grid">
-            <plugin id="itunes">
+            <plugin id="itunes-plugin">
                 <h3>iTunes</h3>
                 <button type="button" class="" onclick="sendPost('/itunes/play')">Play</button>
                 <button type="button" class="" onclick="sendPost('/itunes/pause')">Pause</button>
@@ -29,20 +29,26 @@
                 <button type="button" class="" onclick="sendPost('/itunes/dec')">Decrescendo</button>
                 <button type="button" class="" onclick="sendPost('/itunes/voldown')">Volume down</button>
                 <button type="button" class="" onclick="sendPost('/itunes/volup')">Volume up</button>
+                <h5 id="nexttrackname"></h5>
+                <h5 id="playerstatus"></h5>
+                <h5 id="playervolume"></h5>
+                <h5 id="trackduration"></h5>
+                <h5 id="trackname"></h5>
+                <h5 id="trackpos"></h5>
             </plugin>
-            <plugin id="system-volume">
+            <plugin id="system-volume-plugin">
                 <h3>System Audio</h3>
                 <h6>System Volume: <span id="system-volume">--</span></h6>
                 <button type="button" class="" onclick="sendPost('/system-volume/decrease')">Vol-</button>
                 <button type="button" class="" onclick="sendPost('/system-volume/increase')">Vol+</button>
             </plugin>
-            <plugin id="powerpoint">
+            <plugin id="powerpoint-plugin">
                 <h3>PowerPoint</h3>
                 <button type="button" class="" onclick="sendPost('/powerpoint/prevslide')">Prev slide</button>
                 <button type="button" class="" onclick="sendPost('/powerpoint/nextslide')">Next slide</button>
             </plugin>
 
-            <plugin id="task-switcher">
+            <plugin id="task-switcher-plugin">
                 <h3>Switch Tasks</h3>
                 <button type="button" onclick="sendPost('/task-switcher/slideleft')">Left</button>
                 <button type="button" onclick="sendPost('/task-switcher/slideright')">Right</button>

@@ -31,13 +31,12 @@ switch(arg){
         break;
 }
 
-// use all middleware
-plugins.forEach(plugin => app.use(plugin.middleware));
 
 // use routers per route
 plugins.forEach(plugin => app.use(plugin.route, plugin.router));
+plugins.forEach(plugin => app.use(plugin.middleware));
 
 app.all('/plugins', (req, res) => (res.status(200).send(res.plugins)));
-app.all('*', (req, res) => res.status(404).send('Bad Route'));
+app.all('*', (req, res) => (res.status(200).send(res.plugins)));
 
 const server = app.listen(1914, () => console.log("Started on port 1914"));

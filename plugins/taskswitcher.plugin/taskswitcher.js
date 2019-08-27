@@ -1,23 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
-const execute = (script) => {
-    exec(`osascript ./plugins/taskswitcher.plugin/${script}`);
+const execute = (script, next) => {
+    exec(`osascript ./plugins/taskswitcher.plugin/${script}`, (stdout, stderr) => next());
 }
 
 
-router.post('/slideright', (req, res) => {
+router.use('/slideright', (req, res, next) => {
     // send slideright to taskswitcher
     console.log('taskswitcher slideright');
-    execute('right.scpt');
-    res.status(200).send(res.plugins);
+    execute('right.scpt', next);
 });
 
-router.post('/slideleft', (req, res) => {
+router.use('/slideleft', (req, res, next) => {
     // send slideleft to taskswitcher
     console.log('taskswitcher slideleft');
-    execute('left.scpt');
-    res.status(200).send(res.plugins);
+    execute('left.scpt', next);
 });
 
 
