@@ -29,12 +29,11 @@
                 <button type="button" class="" onclick="sendPost('/itunes/dec')">Decrescendo</button>
                 <button type="button" class="" onclick="sendPost('/itunes/voldown')">Volume down</button>
                 <button type="button" class="" onclick="sendPost('/itunes/volup')">Volume up</button>
-                <h5 id="nexttrackname"></h5>
-                <h5 id="playerstatus"></h5>
-                <h5 id="playervolume"></h5>
-                <h5 id="trackduration"></h5>
-                <h5 id="trackname"></h5>
-                <h5 id="trackpos"></h5>
+                <h5>Current track: <span id="trackname"></span></h5>
+                <h5><span id="trackpos">--</span>/<span id="trackduration">--</span></h5>
+                <h5>Status: <span id="playerstatus"></span></h5>
+                <h5>Vol: <span id="playervolume"></span></h5>
+                <h5>Next track: <span id="nexttrackname"></span></h5>
             </plugin>
             <plugin id="system-volume-plugin">
                 <h3>System Audio</h3>
