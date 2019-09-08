@@ -1,7 +1,7 @@
 window.onload = () => {
     // Load plugins
     let data;
-    $.get('/plugins', x => {
+    $.get('/update', x => {
         data = x;
         console.log(x);
         for (property in data){
