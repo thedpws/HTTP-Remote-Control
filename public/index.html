@@ -23,19 +23,23 @@
             <button type="button" onclick="sendPost('/update')">Update</button>
             <plugin id="itunes-plugin">
                 <h3>iTunes</h3>
-                <button type="button" class="" onclick="sendPost('/itunes/play')">Play</button>
-                <button type="button" class="" onclick="sendPost('/itunes/pause')">Pause</button>
-                <button type="button" class="" onclick="sendPost('/itunes/prev')">Previous track</button>
-                <button type="button" class="" onclick="sendPost('/itunes/next')">Next track</button>
-                <button type="button" class="" onclick="sendPost('/itunes/dec')">Decrescendo</button>
                 <button type="button" class="" onclick="sendPost('/itunes/voldown')">Volume down</button>
                 <button type="button" class="" onclick="sendPost('/itunes/volup')">Volume up</button>
-                <h5>Current track: <span id="trackname"></span></h5>
+
+                <h1>Current track: <span id="trackname"></span></h1>
                 <h5><span id="trackpos">--</span>/<span id="trackduration">--</span></h5>
+                <h5>Next track: <span id="nexttrackname"></span></h5>
                 <h5>Status: <span id="playerstatus"></span></h5>
                 <h5>Vol: <span id="playervolume"></span></h5>
-                <h5>Next track: <span id="nexttrackname"></span></h5>
+                <button type="button" class="" onclick="sendPost('/itunes/play')">Play</button>
+                <button type="button" class="" onclick="sendPost('/itunes/pause')">Pause</button>
+                <br/>
+                <button type="button" class="" onclick="sendPost('/itunes/prev')">Previous track</button>
+                <button type="button" class="" onclick="sendPost('/itunes/next')">Next track</button>
+                <br/>
+                <button type="button" class="" onclick="sendPost('/itunes/dec')">Decrescendo</button>
             </plugin>
+
             <plugin id="system-volume-plugin">
                 <h3>System Audio</h3>
                 <h6>System Volume: <span id="system-volume">--</span></h6>
@@ -48,11 +52,13 @@
                 <button type="button" class="" onclick="sendPost('/powerpoint/nextslide')">Next slide</button>
             </plugin>
 
+            <!--
             <plugin id="task-switcher-plugin">
                 <h3>Switch Tasks</h3>
                 <button type="button" onclick="sendPost('/task-switcher/slideleft')">Left</button>
                 <button type="button" onclick="sendPost('/task-switcher/slideright')">Right</button>
             </plugin>
+            -->
         </div> <!-- end grid -->
 
         <!-- myscripts -->

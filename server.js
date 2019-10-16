@@ -6,11 +6,16 @@ const arg = process.argv[2];
 app.use(express.static('public'));
 
 // Morgan request logger
-const morgan = require('morgan');
-app.use(morgan('tiny'));
+//const morgan = require('morgan');
+//app.use(require('morgan')('tiny'));
+app.use('*', (req, res, next) => {
+  console.log(req.baseUrl)
+  next()
+});
 
 // Choose set of middleware to use
 // Prepare the response for plugins
+
 app.use('/', (req, res, next) => {
     res.plugins = {};
     next();
@@ -34,9 +39,12 @@ switch(arg){
 
 // use routers per route
 plugins.forEach(plugin => app.use(plugin.route, plugin.router));
-plugins.forEach(plugin => app.use(plugin.middleware));
+plugins.forEach(plugin => app.use('/update', plugin.middleware));
+plugins.forEach(plugin => app.use(plugin.route, plugin.middleware));
 
 app.all('/update', (req, res) => (res.status(200).send(res.plugins)));
 app.all('*', (req, res) => (res.status(200).send(res.plugins)));
 
-const server = app.listen(1914, () => console.log("Started on port 1914"));
+const ip = require('ip');
+const port = 1914;
+const server = app.listen(port, () => console.log(`Started on ${require('ip').address()}:${port}`));

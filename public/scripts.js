@@ -13,6 +13,28 @@ window.onload = () => {
     });
 
 }
+let trackpos = 0;
+let trackduration = 0;
+
+function updateInfo(trackpos, trackduration){
+  trackpos = trackpos;
+  trackduration = trackduration;
+}
+
+function updateTrackPosition(){
+  trackpos += 0.2;
+  if (trackpos >= trackduration) {
+    $.get('/update', handleResponse)
+  }
+  const eTrackpos = document.getElementById('trackpos');
+  const eTrackdur = document.getElementById('trackduration');
+
+  const simpleTrackpos = trackpos.toFixed(0);
+  const simpleTrackdur = trackduration.toFixed(0);
+
+  eTrackpos.innerText = simpleTrackpos;
+  eTrackdur.innerText = simpleTrackdur;
+}
 
 // Each plugin is expected to return info as an object.
 const handleResponse = data => {
@@ -23,7 +45,9 @@ const handleResponse = data => {
       if (e) e.innerText = data[plugin][property];
     }
   }
+  //updateInfo(data['itunes']['trackpos'], data['itunes']['trackduration']);
 }
+
 
 const sendPost = path => {
     $('body').css('background-color', 'red');

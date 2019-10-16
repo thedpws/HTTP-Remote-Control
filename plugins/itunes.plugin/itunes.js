@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
 const execute = (script, next) => {
-    exec(`osascript ./plugins/itunes.plugin/${script}`, (stdout, stderr) => next());
+    exec(`osascript ./plugins/itunes.plugin/${script} &`, (stdout, stderr) => next());
 }
 
 
@@ -65,6 +65,16 @@ function parse(output, cb) {
     res.nexttrackname = infos[5];
     cb(res);
 }
+
+cache = {
+  trackname:      undefined,
+  trackduration:  undefined,
+  trackpos:       undefined,
+  playerstatus:   undefined,
+  playervolume:   undefined,
+  nexttrackname:  undefined
+}
+
 module.exports = {
     middleware: (req, res, next) => {
         // send current track, position, duration, next track

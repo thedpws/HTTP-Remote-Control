@@ -7,7 +7,6 @@ const taskswitcher = require('./plugins/taskswitcher.plugin/taskswitcher');
  *  -iTunes
  *  -Powerpoint
  *  -System Volume
- *  -Task switching
  */
 
-module.exports = [itunes, ppt, sysvol, taskswitcher];
+module.exports = [itunes, ppt, sysvol];

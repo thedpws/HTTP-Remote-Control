@@ -1,6 +1,8 @@
 
 plugin {
+  /*
     display: none;
+  */
 }
 .center{
     text-align: center;
@@ -23,4 +25,5 @@ plugin {
 button {
   width: 100px;
   height: 100px;
+  font-size: 10pt;
 }

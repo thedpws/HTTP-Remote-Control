@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const exec = require('child_process').exec;
 const execute = (script, next) => {
-    exec(`osascript ./plugins/systemvolume.plugin/${script}`, (stderr, stdout) => next())
+    exec(`osascript ./plugins/systemvolume.plugin/${script} &`, (stderr, stdout) => next())
 }
 
 
