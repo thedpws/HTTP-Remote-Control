@@ -18,6 +18,13 @@ router.use('/pause', (req, res, next) => {
     execute('pause.scpt', next);
 });
 
+router.use('/playpause', (req, res, next) => {
+    // send pause to itunes
+    //console.log('itunes pause');
+    execute('playpause.scpt', next);
+});
+
+
 router.use('/next', (req, res, next) => {
     // send next to itunes
     //console.log('itunes next');
@@ -57,6 +64,7 @@ function parse(output, cb) {
     }
     infos = output.split("$");
     const res = {};
+
     res.trackname = infos[0];
     res.trackduration = infos[1];
     res.trackpos = infos[2];

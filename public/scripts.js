@@ -13,6 +13,54 @@ window.onload = () => {
     });
 
 }
+const formatTrackname = function (trackname) { return trackname.substring(0, 5); };
+
+const formatStatus = status => {
+	switch (status){
+		case "«constant ****kPSp»": return "PAUSED";
+		case "«constant ****kPSP»": return "PLAYING";
+		case "«constant ****kPSS»": return "STOPPED";
+		default: return status;
+	}
+};
+
+const format = (propName, propValue) => {
+	switch (propName){
+		case 'nexttrackname':
+		case 'trackname': return propValue.substring(0, 5);
+		case 'playerstatus': return formatStatus(propValue);
+    case 'trackduration':
+    case 'trackpos': return parseFloat(propValue, 10).toFixed(2);
+		default: return propValue;
+		
+	}
+}
+
+
+
+// FOR IR REMOTE
+document.addEventListener('keydown', e => {
+  console.log(e.keyCode);
+  console.log(e.key);
+  let path;
+  switch(e.key){
+    case 'F1': path = 'update'; break;
+    case 'F2': path = 'system-volume/decrease'; break;
+    case 'F3': path = 'powerpoint/prevslide'; break;
+    case 'F4': path = 'powerpoint/nextslide'; break;
+    case 'F7': path = 'itunes/prev'; break;
+    case 'F8': path = 'itunes/playpause'; break;
+    case 'F9': path = 'itunes/next'; break;
+    case 'F10': path = 'itunes/dec'; break;
+    case 'F12': path = 'system-volume/increase'; break;
+  };
+  if (path == undefined) console.log(`${e.key} unsupported`);
+  else sendPost(`/${path}`);
+});
+
+
+
+/*
 let trackpos = 0;
 let trackduration = 0;
 
@@ -20,7 +68,9 @@ function updateInfo(trackpos, trackduration){
   trackpos = trackpos;
   trackduration = trackduration;
 }
+*/
 
+/*
 function updateTrackPosition(){
   trackpos += 0.2;
   if (trackpos >= trackduration) {
@@ -35,27 +85,27 @@ function updateTrackPosition(){
   eTrackpos.innerText = simpleTrackpos;
   eTrackdur.innerText = simpleTrackdur;
 }
+*/
 
 // Each plugin is expected to return info as an object.
+const cache = {};
 const handleResponse = data => {
-  console.log(data);
-  for (plugin in data) {
-    for (property in data[plugin]) {
-      const e = document.getElementById(property);
-      if (e) e.innerText = data[plugin][property];
-    }
+  console.log('data', data);
+  for (plugin in data) for (property in data[plugin]) {
+      console.log('datum', plugin, property, data[plugin][property])
+      if (!cache[property]) cache[property] = document.getElementById(property);
+      const e = cache[property];
+      if (e) e.innerText = format(property, data[plugin][property]);
   }
-  //updateInfo(data['itunes']['trackpos'], data['itunes']['trackduration']);
 }
-
 
 const sendPost = path => {
-    $('body').css('background-color', 'red');
+    $('body').css('background-color', 'blue');
     $.post(path, response => {
-        handleResponse(response);
         $('body').css('background-color', 'white');
+        handleResponse(response);
     });
-}
+};
 /*
 window.onload = sendPutTo('/update');
 

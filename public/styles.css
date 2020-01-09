@@ -4,6 +4,15 @@ plugin {
     display: none;
   */
 }
+.large {
+  font-size: 200pt;
+  margin: 0 0 0 0;
+}
+
+.medium {
+  font-size: 50pt;
+}
+
 .center{
     text-align: center;
 }
