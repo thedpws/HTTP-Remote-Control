@@ -1,4 +1,4 @@
-tell application "iTunes"
+tell application "Music"
     set currtrack_name to get name of current track
     log currtrack_name
     set currtrack_duration to get duration of current track

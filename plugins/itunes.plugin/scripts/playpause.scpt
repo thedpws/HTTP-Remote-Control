@@ -1,1 +1,1 @@
-tell application "iTunes" to playpause
+tell application "Music" to playpause

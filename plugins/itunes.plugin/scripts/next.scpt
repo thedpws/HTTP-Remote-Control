@@ -1,1 +1,1 @@
-tell application "iTunes" to next track
+tell application "Music" to next track

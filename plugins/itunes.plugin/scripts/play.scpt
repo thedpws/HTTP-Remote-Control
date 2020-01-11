@@ -1,1 +1,1 @@
-tell application "iTunes" to play
+tell application "Music" to play
