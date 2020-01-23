@@ -1,0 +1,38 @@
+
+plugin {
+  /*
+    display: none;
+  */
+}
+.large {
+  font-size: 200pt;
+  margin: 0 0 0 0;
+}
+
+.medium {
+  font-size: 50pt;
+}
+
+.center{
+    text-align: center;
+}
+.jumbotron{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.row{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.grid {
+    display: grid;
+}
+
+button {
+  width: 100px;
+  height: 100px;
+  font-size: 10pt;
+}
